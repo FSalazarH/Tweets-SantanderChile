@@ -1,0 +1,89 @@
+<div class="row">
+	<div class="col-md-5 pull-left">
+      <!-- About Me Box -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Opciones de Búsqueda</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <strong><i class="fa fa-book margin-r-5"></i> Mostrar Tweets por Sentimiento: </strong>
+          
+          <p>
+          	<select name="sentimentSelect" id="sentimentSelect" ng-model="data.sentiment" class="form-control">
+		      <option selected= "selected" value="positive">Positivo</option>
+		      <option value="negative">Negativo</option>
+		      <option value="neutral">Neutral</option>
+		  	</select>
+		  </p>
+
+          <hr>
+
+          <strong><i class="fa fa-pencil margin-r-5"></i> Rango de Fecha</strong>
+
+          <p>
+			<div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+			    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+			    <span></span> <b class="caret"></b>
+			</div>
+		  </p>
+
+		  <br>
+          <hr>
+
+          <p>
+          	<button type="button" class="btn btn-success btn-block" ng-click="cambiar()" style="padding: 10px 20px; font-size: 15px; border-radius: 10px;">
+          	<i class = "fa fa-search"></i> Buscar
+          	</button>
+          </p>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+	</div>
+
+	<div class="col-md-7 col-xs-12">
+	  <!-- DIRECT CHAT PRIMARY -->
+	  <div class="box box-primary direct-chat direct-chat-primary">
+	    <div class="box-header with-border">
+	      <h3 class="box-title" >Tweets con Sentimiento {{mostrarSentiment}}</h3>
+			<div class="alert alert-warning alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h5>
+					<i class="icon fa fa-warning"></i>
+					Importante: Watson se encuentra en constante
+					entrenamiento para mejorar la
+					precision del sentimiento.
+				</h5>
+			</div>
+
+
+
+	    </div>
+	    <!-- /.box-header -->
+	    <div class="box-body">
+	      <!-- Conversations are loaded here -->
+	      	<div class="direct-chat-messages" style="width: auto; height: 705px;">
+	        <!-- Message. Default to the left -->
+	        <div class="direct-chat-msg" ng-repeat="x in tweets">
+	          <div class="direct-chat-info clearfix">
+	            <span class="direct-chat-name pull-left">{{x.user}}</span>
+	            <span class="direct-chat-timestamp pull-right">{{x.fecha}}</span>
+	          </div>
+	          <!-- /.direct-chat-info -->
+	          <img class="direct-chat-img" src="{{x.img}}" onerror="this.src='dist/img/twitter-icon.png'"><!-- /.direct-chat-img -->
+	          <div class="direct-chat-text">
+	          	{{x.text}}
+	          </div>
+	          <!-- /.direct-chat-text -->
+	        </div>
+	        <!-- /.direct-chat-msg -->
+
+	      <!-- Contacts are loaded here -->
+	    	</div>
+	    <!-- /.box-body -->
+	    <!-- /.box-footer-->
+	  </div>
+	  <!--/.direct-chat -->
+	</div>
+</div>

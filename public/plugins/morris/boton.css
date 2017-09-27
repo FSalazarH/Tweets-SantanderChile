@@ -1,0 +1,78 @@
+.boton {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #666666;
+    box-shadow: 0 5px 5px #313131, 0 9px 0 #393939, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 9px rgba(255,255,255,0.2), inset 0 -2px 9px rgba(0,0,0,0.2);
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    display: inline-block;
+    font-family: Arial, Helvetica, sans;
+    text-shadow: 0px -1px 0px rgba(0,0,0,0.2);
+}
+
+.boton:hover {
+    box-shadow: 0 5px 5px #313131, 0 9px 0 #393939, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 15px rgba(255,255,255,0.4), inset 0 -2px 9px rgba(0,0,0,0.2);
+    color: #fff !important;
+}
+
+.boton:active {
+    top: 7px;
+    box-shadow: 0 2px 0 #393939, 0px 4px 4px rgba(0,0,0,0.4), inset 0px 2px 5px rgba(0,0,0,0.2);
+    color: #fff !important;
+}
+
+.formaBoton {
+    border-radius: 5px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.colorMorado{
+    background-color: #aa66cc;
+    box-shadow: 0 5px 5px #6a1b9a, 0 9px 0 #4a148c , 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 9px rgba(255,255,255,0.2), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorMorado:hover {
+    box-shadow: 0 5px 5px #6a1b9a, 0 9px 0 #4a148c , 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 15px rgba(255,255,255,0.4), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorMorado:active {
+    box-shadow: 0 2px 0 #4a148c , 0px 4px 4px rgba(0,0,0,0.4), inset 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+
+.colorCalipso{
+    background-color: #2BBBAD;
+    box-shadow: 0 5px 5px #00796b, 0 9px 0 #004d40, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 9px rgba(255,255,255,0.2), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorCalipso:hover {
+    box-shadow: 0 5px 5px #00796b, 0 9px 0 #004d40, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 15px rgba(255,255,255,0.4), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorCalipso:active {
+    box-shadow: 0 2px 0 #004d40, 0px 4px 4px rgba(0,0,0,0.4), inset 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+.colorAzul{
+    background-color: #4285F4;
+    box-shadow: 0 5px 5px #1565c0, 0 9px 0 #0d47a1, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 9px rgba(255,255,255,0.2), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorAzul:hover {
+    box-shadow: 0 5px 5px #1565c0 , 0 9px 0 #0d47a1, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 15px rgba(255,255,255,0.4), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorAzul:active {
+    box-shadow: 0 2px 0 #0d47a1, 0px 4px 4px rgba(0,0,0,0.4), inset 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+
+.colorRosado{
+    background-color: #ff80ab;
+    box-shadow: 0 5px 5px #ff4081, 0 9px 0 #c51162, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 9px rgba(255,255,255,0.2), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorRosado:hover {
+    box-shadow: 0 5px 5px #ff4081 , 0 9px 0 #c51162, 0px 9px 10px rgba(0,0,0,0.4), inset 0px 2px 15px rgba(255,255,255,0.4), inset 0 -2px 9px rgba(0,0,0,0.2);
+}
+.colorRosado:active {
+    box-shadow: 0 2px 0 #c51162, 0px 4px 4px rgba(0,0,0,0.4), inset 0px 2px 5px rgba(0,0,0,0.2);
+}

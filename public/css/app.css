@@ -1,0 +1,100 @@
+/* app css stylesheet */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+path {  stroke: #fff; }
+path:hover {  opacity:0.9; }
+rect:hover {  fill:blue; }
+.navbar-brand {
+  padding: 15px 15px;
+  height: 60px;
+}
+.axis {  font: 10px sans-serif; }
+.legend tr{    border-bottom:1px solid grey; }
+.legend tr:first-child{    border-top:1px solid grey; }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {  display: none; }
+.legend{
+  margin-bottom:76px;
+  display:inline-block;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+.legend td{
+  padding:4px 5px;
+  vertical-align:bottom;
+}
+.legendFreq, .legendPerc{
+  align:right;
+  width:50px;
+}
+ul {
+  text-align:left;
+  width: 400px;
+  margin: auto;
+  list-style-type:none;
+}
+li {
+  border: 1px solid #999;
+  border-left-width: 10px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+li.sentiment_positive {
+  border-left: 10px solid #69B369;
+}
+li.sentiment_negative {
+  border-left: 10px solid #E64444;
+}
+li.sentiment_neutral {
+  border-left: 10px solid #C0C0C0;
+}
+.tweet {
+  display: inline-block;
+  font-family: Helvetica;
+  width: 320px;
+  margin-left: 10px;
+}
+.column-left{
+  float: left; width: 34%;
+  height: 600px;
+  overflow: auto;
+}
+.column-right{
+  float: right; width: 34%;
+  height: 600px;
+  overflow: auto;
+}
+.column-center{
+  display: inline-block; width: 32%;
+  height: 600px;
+  overflow: auto;
+}
+img {
+  width: 48px;
+  height: 48px;
+  border-radius: 5px;
+  vertical-align: top;
+}
+body::-webkit-scrollbar {
+  width: 1em;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
