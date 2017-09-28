@@ -85,7 +85,7 @@ mainAppControllers.controller('sentimentsController', ['$scope', '$http',
             "sentiment" : 'positive'
         };
 
-        mostrarTweets($scope.data.sentiment, '1498536000000', '1501127999999');
+        mostrarTweets($scope.data.sentiment, '1498536000000', Date.now());
     }
 ]);
 
@@ -181,10 +181,11 @@ mainAppControllers.controller('mainController', ['$scope','$http', '$window',
         success(function(data, status, headers, config){
             var data = data;
 
-            var totalMayo = data["rows"][0]["value"]+data["rows"][1]["value"]+data["rows"][2]["value"];
+            /*var totalMayo = data["rows"][0]["value"]+data["rows"][1]["value"]+data["rows"][2]["value"];
             var totalJunio = data["rows"][3]["value"] + data["rows"][4]["value"] + data["rows"][5]["value"];
             var totalJulio = data["rows"][6]["value"] + data["rows"][7]["value"] + data["rows"][8]["value"];
             var totalAgosto = data["rows"][9]["value"] + data["rows"][10]["value"] + data["rows"][11]["value"];
+            var totalSeptiembre = data["rows"][12]["value"] + data["rows"][13]["value"] + data["rows"][14]["value"];*/
 
             /* Gráfico Barras Morris Anual */
             var bar = new Morris.Bar({
@@ -199,7 +200,7 @@ mainAppControllers.controller('mainController', ['$scope','$http', '$window',
                 {y: 'Jun', a: data["rows"][3]["value"], b: data["rows"][5]["value"], c: data["rows"][4]["value"]},
                 {y: 'Jul', a: data["rows"][6]["value"], b: data["rows"][8]["value"], c: data["rows"][7]["value"]},
                 {y: "Ago", a: data["rows"][9]["value"], b: data["rows"][11]["value"], c: data["rows"][10]["value"]},
-                {y: "Sep", a: 0, b: 0, c: 0},
+                {y: "Sep", a: data["rows"][12]["value"], b:data["rows"][14]["value"], c: data["rows"][13]["value"]},
                 {y: "Oct", a: 0, b: 0, c: 0},
                 {y: "Nov", a: 0, b: 0, c: 0},
                 {y: "Dic", a: 0, b: 0, c: 0}
