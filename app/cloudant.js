@@ -48,7 +48,7 @@ exports.noClasificados = function(req, res){
 //Totales mensuales
 exports.totalMensual = function(req, res){
     var request = require('request');
-    var url = credenciales+'/clasificados/_design/docs/_view/totales_mensual?group=true&descending=true';
+    var url = credenciales+'/clasificados/_design/docs/_view/totales_mensual?group=true&sort=key[0]&descending=false';
 
     request(url, function(error, response, body){
         if(!error && response.statusCode == 200) {

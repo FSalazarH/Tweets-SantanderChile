@@ -180,13 +180,6 @@ mainAppControllers.controller('mainController', ['$scope','$http', '$window',
         $http({method: 'GET', url:'/queryTotalMensual'}).
         success(function(data, status, headers, config){
             var data = data;
-
-            /*var totalMayo = data["rows"][0]["value"]+data["rows"][1]["value"]+data["rows"][2]["value"];
-            var totalJunio = data["rows"][3]["value"] + data["rows"][4]["value"] + data["rows"][5]["value"];
-            var totalJulio = data["rows"][6]["value"] + data["rows"][7]["value"] + data["rows"][8]["value"];
-            var totalAgosto = data["rows"][9]["value"] + data["rows"][10]["value"] + data["rows"][11]["value"];
-            var totalSeptiembre = data["rows"][12]["value"] + data["rows"][13]["value"] + data["rows"][14]["value"];*/
-
             /* Gráfico Barras Morris Anual */
             var bar = new Morris.Bar({
               element: 'bar-chart-morris',
@@ -196,12 +189,12 @@ mainAppControllers.controller('mainController', ['$scope','$http', '$window',
                 {y: 'Feb', a: 0, b: 0, c: 0},
                 {y: 'Mar', a: 0, b: 0, c: 0},
                 {y: 'Abr', a: 0, b: 0, c: 0},
-                {y: 'May', a: data["rows"][0]["value"], b: data["rows"][2]["value"], c: data["rows"][1]["value"]},
-                {y: 'Jun', a: data["rows"][3]["value"], b: data["rows"][5]["value"], c: data["rows"][4]["value"]},
-                {y: 'Jul', a: data["rows"][6]["value"], b: data["rows"][8]["value"], c: data["rows"][7]["value"]},
-                {y: "Ago", a: data["rows"][9]["value"], b: data["rows"][11]["value"], c: data["rows"][10]["value"]},
-                {y: "Sep", a: data["rows"][12]["value"], b:data["rows"][14]["value"], c: data["rows"][13]["value"]},
-                {y: "Oct", a: 0, b: 0, c: 0},
+                {y: 'May', a: data["rows"][2]["value"], b: data["rows"][0]["value"], c: data["rows"][1]["value"]},
+                {y: 'Jun', a: data["rows"][5]["value"], b: data["rows"][3]["value"], c: data["rows"][4]["value"]},
+                {y: 'Jul', a: data["rows"][8]["value"], b: data["rows"][6]["value"], c: data["rows"][7]["value"]},
+                {y: "Ago", a: data["rows"][11]["value"], b: data["rows"][9]["value"], c: data["rows"][10]["value"]},
+                {y: "Sep", a: data["rows"][14]["value"], b:data["rows"][12]["value"], c: data["rows"][13]["value"]},
+                {y: "Oct", a: data["rows"][17]["value"], b:data["rows"][15]["value"], c: data["rows"][16]["value"]},
                 {y: "Nov", a: 0, b: 0, c: 0},
                 {y: "Dic", a: 0, b: 0, c: 0}
               ],
