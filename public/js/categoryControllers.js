@@ -596,9 +596,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
                             // size of the diagram
                             var viewerWidth = $("#hierarchy").width();
-                            var viewerHeight = $("#chart2").height()+ $("#tagbubble").height();
-
-
+                            var viewerHeight = 2*$("#chart2").height();
 
                             var tree = d3.layout.tree()
                                 .size([viewerHeight, viewerWidth]);
@@ -662,8 +660,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
                                 scale = zoomListener.scale();
                                 x = -source.y0;
                                 y = -source.x0;
-                                x = x * scale + viewerWidth;
-                                y = y * scale + viewerHeight;
+                                x = x * scale + viewerWidth / 4;
+                                y = y * scale +viewerHeight / 2;
                                 d3.select('g').transition()
                                     .duration(duration)
                                     .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");
@@ -719,7 +717,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
                                         var bar = my_morrys_bar(data3, "chart2")
 
                                         var hijos= ObtenerHijos(categoria).replace(/\*/g,'or').slice(2);
-                                        bubble(seriesBubble(categoria),"bubble2",diccionario_categoria[categoria]["hijos"]);
+                                        bubble(seriesBubble(categoria,'nn'),"bubble2",diccionario_categoria[categoria]["hijos"]);
                                         var sd ='(' + hijos + ')';
                                         getTweetsLikes(sd);
                                         getTweets(sd);
@@ -749,7 +747,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
                                     }
                                 };
                                 childCount(0, root);
-                                var newHeight = d3.max(levelWidth) * 40; // 25 pixels per line
+                                var newHeight = d3.max(levelWidth) * 25; // 25 pixels per line
                                 tree = tree.size([newHeight, viewerWidth]);
 
                                 // Compute the new tree layout.
@@ -905,8 +903,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
                             // Define the root
                             root = treeData;
-                            root.x0 = 1000;
-                            root.y0 = 1000;
+                            root.x0 = viewerHeight;
+                            root.y0 = 0;
 
                             // Layout the tree initially and center on the root node.
 
@@ -924,11 +922,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
                             }
 
                             root.children.forEach(collapse);
-
                             update(root);
                             centerNode(root);
-                            update(root);
-
                         };
 
 
@@ -938,8 +933,9 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
                         //Para mantener tamano de grafico de dona y barra
                         //document.getElementById("collap1").style.height =   $("#bar3").height()+ "px";
-                        document.getElementById("tweetsList1").style.height = $("#tagbubble").height()+ "px";
-                        document.getElementById("tweetList1.5").style.height = $("#bubble2").height()+ "px";
+
+                        document.getElementById("tweetList1.5").style.height =  $("#chart2").height() - $("#tweetList2").height() + "px";
+                        document.getElementById("tweetsList1").style.height = $("#chart2").height()+ "px";
 
                         console.log(followersSentiment);
                         //Click por sentimiento:

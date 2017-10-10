@@ -23,45 +23,12 @@
     stroke-width: 3px;
   }
 
-  
+
 </style>
 
 <section class="content">
 
   <div class="row" >
-
-    <div class="col-md-12">
-      <div class="box box-primary" id="tagbubble" >
-        <div class="box-header with-border">
-          <i class="fa fa-circle" ></i>
-
-          <h3 class="box-title">  Nivel de Exposición en Twitter sobre: {{currentCategory}}</h3>
-
-
-        </div>
-
-
-        <div class="box-body" id="bottonbubble">
-          <center>
-            <label class="radio-inline">
-              <input  id="radio-todos" type="radio" name="optradio" checked="checked" > Todos
-            </label>
-            <label class="radio-inline">
-              <input id="radio-positivo" type="radio" name="optradio"> Positivos
-            </label>
-            <label class="radio-inline">
-              <input id="radio-negativo" type="radio" name="optradio"> Negativos
-            </label>
-            <label class="radio-inline">
-              <input  id="radio-neutral" type="radio" name="optradio"> Neutrales
-            </label>
-          </center>
-        </div>
-
-        <div id ="bubble2"></div>
-      </div>
-
-    </div>
 
 
     <div class="col-md-6">
@@ -79,6 +46,8 @@
       </div>
 
     </div>
+
+
 
 
     <div class="col-md-6" id="tweetsList1">
@@ -179,7 +148,8 @@
 
         </div>
 
-        <div class="box-footer">
+        <div class="box-footer" id="tweetList2">
+          <br>   <br>
 
         </div>
       </div>
@@ -188,17 +158,52 @@
 
 
     <div class="col-md-6">
-        <div class="box box-primary" id="bar3">
-          <div class="box-header with-border">
-            <i class="fa fa-bar-chart-o"></i>
-            <h3 class="box-title"> Distribución de Tweets por {{currentCategory}} </h3>
-          </div>
-          <div class="box-body">
-            <div class="chart"  id="chart2"></div>
-          </div>
+      <div class="box box-primary" id="bar3">
+        <div class="box-header with-border">
+          <i class="fa fa-bar-chart-o"></i>
+          <h3 class="box-title"> Distribución de Tweets por {{currentCategory}} </h3>
+        </div>
+        <div class="box-body">
+          <div class="chart"  id="chart2"></div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-md-12">
+      <div class="box box-primary" id="tagbubble" >
+        <div class="box-header with-border">
+          <i class="fa fa-circle" ></i>
+
+          <h3 class="box-title">  Nivel de Exposición en Twitter sobre: {{currentCategory}}</h3>
+
 
         </div>
+
+
+        <div class="box-body" id="bottonbubble">
+          <center>
+            <label class="radio-inline">
+              <input  id="radio-todos" type="radio" name="optradio" checked="checked" > Todos
+            </label>
+            <label class="radio-inline">
+              <input id="radio-positivo" type="radio" name="optradio"> Positivos
+            </label>
+            <label class="radio-inline">
+              <input id="radio-negativo" type="radio" name="optradio"> Negativos
+            </label>
+            <label class="radio-inline">
+              <input  id="radio-neutral" type="radio" name="optradio"> Neutrales
+            </label>
+          </center>
+        </div>
+
+        <div id ="bubble2"></div>
+      </div>
+
     </div>
+
 
 
 
