@@ -29,37 +29,8 @@
 <section class="content">
 
   <div class="row" >
-    <div class="col-md-6">
-      <div class="box box-primary" id="collap1" >
-      <div class="box-header with-border" style="height:auto;border-radius: 10px;">
-        <i class="fa fa-cubes" ></i>
 
-        <h3 class="box-title">Tweets Totales por Categorías (Cantidad de menciones)</h3>
-
-
-      </div>
-      <div class="box-body" >
-        <div id ="hierarchy"></div>
-      </div>
-    </div>
-
-    </div>
-
-    <div class="col-md-6">
-        <div class="box box-primary" id="bar3">
-          <div class="box-header with-border">
-            <i class="fa fa-bar-chart-o"></i>
-            <h3 class="box-title"> Distribución de Tweets por {{currentCategory}} </h3>
-          </div>
-          <div class="box-body">
-            <div class="chart"  id="chart2"></div>
-          </div>
-
-        </div>
-    </div>
-
-
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="box box-primary" id="tagbubble" >
         <div class="box-header with-border">
           <i class="fa fa-circle" ></i>
@@ -68,8 +39,42 @@
 
 
         </div>
+
+
+        <div class="box-body" id="bottonbubble">
+          <center>
+            <label class="radio-inline">
+              <input  id="radio-todos" type="radio" name="optradio" checked="checked" > Todos
+            </label>
+            <label class="radio-inline">
+              <input id="radio-positivo" type="radio" name="optradio"> Positivos
+            </label>
+            <label class="radio-inline">
+              <input id="radio-negativo" type="radio" name="optradio"> Negativos
+            </label>
+            <label class="radio-inline">
+              <input  id="radio-neutral" type="radio" name="optradio"> Neutrales
+            </label>
+          </center>
+        </div>
+
+        <div id ="bubble2"></div>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-6">
+      <div class="box box-primary" id="collap1" >
+        <div class="box-header with-border" style="height:auto;border-radius: 10px;">
+          <i class="fa fa-cubes" ></i>
+
+          <h3 class="box-title">Tweets Totales por Categorías (Cantidad de menciones)</h3>
+
+
+        </div>
         <div class="box-body" >
-          <div id ="bubble2"></div>
+          <div id ="hierarchy"></div>
         </div>
       </div>
 
@@ -120,54 +125,54 @@
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
 
             <div class="collapse" id="like">
               <div class="box-body chat" >
-                  <div ng-repeat="x in tweetsLikes">
-                    <div class="item">
-                      <img ng-src="{{x.imagen}}" onerror="this.src='dist/img/twitter-icon.png'" class="online" style="border:4px solid{{x.color}}">
-                      <p class="message">
-                        <a href="#" class="name">
-                          {{x.user}}
-                        </a>
-                        {{x.text}}
-                        <br>
-                        <span class="label"style="background-color: rgba(0, 188, 212, 0.7);"> <i class="fa fa-thumbs-o-up"></i> {{x.likes_count}}  </span>
-                        &nbsp;
-                        <span class="label"  style="background-color: rgba(63, 81, 181, 0.7);"> <i class="fa fa-users"></i> {{x.followers_count}}  </span>
-                        &nbsp;
-                        <span class="label" style="background-color: rgba(3, 169, 244, 0.7);"> <i class="fa fa-wechat"></i> {{x.retweet_count}}  </span>
+                <div ng-repeat="x in tweetsLikes">
+                  <div class="item">
+                    <img ng-src="{{x.imagen}}" onerror="this.src='dist/img/twitter-icon.png'" class="online" style="border:4px solid{{x.color}}">
+                    <p class="message">
+                      <a href="#" class="name">
+                        {{x.user}}
+                      </a>
+                      {{x.text}}
+                      <br>
+                      <span class="label"style="background-color: rgba(0, 188, 212, 0.7);"> <i class="fa fa-thumbs-o-up"></i> {{x.likes_count}}  </span>
+                      &nbsp;
+                      <span class="label"  style="background-color: rgba(63, 81, 181, 0.7);"> <i class="fa fa-users"></i> {{x.followers_count}}  </span>
+                      &nbsp;
+                      <span class="label" style="background-color: rgba(3, 169, 244, 0.7);"> <i class="fa fa-wechat"></i> {{x.retweet_count}}  </span>
 
-                      </p>
-                    </div>
+                    </p>
                   </div>
+                </div>
               </div>
             </div>
             <div class="collapse" id="retweets">
               <div class="box-body chat" id="retweets">
-                  <div ng-repeat="x in tweetsRetweets">
-                    <div class="item">
-                      <img ng-src="{{x.imagen}}" onerror="this.src='dist/img/twitter-icon.png'" class="online" style="border:4px solid{{x.color}}">
-                      <p class="message">
-                        <a href="#" class="name">
-                          {{x.user}}
-                        </a>
-                        {{x.text}}
-                        <br>
-                        <span class="label" style="background-color: rgba(3, 169, 244, 0.7);"> <i class="fa fa-wechat"></i> {{x.retweet_count}}  </span>
-                        &nbsp;
-                        <span class="label" style="background-color: rgba(0, 188, 212, 0.7);"> <i class="fa fa-thumbs-o-up"></i> {{x.likes_count}}  </span>
-                        &nbsp;
-                        <span class="label"  style="background-color: rgba(63, 81, 181, 0.7);"> <i class="fa fa-users"></i> {{x.followers_count}}  </span>
+                <div ng-repeat="x in tweetsRetweets">
+                  <div class="item">
+                    <img ng-src="{{x.imagen}}" onerror="this.src='dist/img/twitter-icon.png'" class="online" style="border:4px solid{{x.color}}">
+                    <p class="message">
+                      <a href="#" class="name">
+                        {{x.user}}
+                      </a>
+                      {{x.text}}
+                      <br>
+                      <span class="label" style="background-color: rgba(3, 169, 244, 0.7);"> <i class="fa fa-wechat"></i> {{x.retweet_count}}  </span>
+                      &nbsp;
+                      <span class="label" style="background-color: rgba(0, 188, 212, 0.7);"> <i class="fa fa-thumbs-o-up"></i> {{x.likes_count}}  </span>
+                      &nbsp;
+                      <span class="label"  style="background-color: rgba(63, 81, 181, 0.7);"> <i class="fa fa-users"></i> {{x.followers_count}}  </span>
 
 
-                      </p>
-                    </div>
+                    </p>
                   </div>
+                </div>
 
 
-            </div>
+              </div>
             </div>
 
           </div>
@@ -180,6 +185,21 @@
       </div>
 
     </div>
+
+
+    <div class="col-md-6">
+        <div class="box box-primary" id="bar3">
+          <div class="box-header with-border">
+            <i class="fa fa-bar-chart-o"></i>
+            <h3 class="box-title"> Distribución de Tweets por {{currentCategory}} </h3>
+          </div>
+          <div class="box-body">
+            <div class="chart"  id="chart2"></div>
+          </div>
+
+        </div>
+    </div>
+
 
 
   </div>

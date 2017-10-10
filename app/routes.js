@@ -34,6 +34,9 @@ module.exports = function(app, cloudant) {
     app.get('/queryTweetsCategoryRetweets/:category', cloudant.tweets_category_retweets);
 
 
+    app.get('/queryTweetsCategorySentiment', cloudant.tweets_category_sentiment);
+
+
     //bubble data
     app.get('/queryTotalLikesCategory', cloudant.totalLikesCategory);
     app.get('/queryTotalCategory', cloudant.totalCategory);

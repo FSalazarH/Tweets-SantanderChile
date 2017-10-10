@@ -6,6 +6,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
 
         var categoryQuery = ""; //Aca va el nombre de la categoria a consultar (puedes ver el arreglo de subCategorias con los nombres reales)
+        var followersSentiment = [];
 
         //Función para llamar los tweets según categoría
         function getTweets(query){
@@ -31,14 +32,48 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
             });
         }
 
+        //Tweets por sentimiento para modificar grafico bubble.
+        function getTweetsSentiment(){
+
+            $http({method: 'GET', url:'/queryTweetsCategorySentiment'}).
+            success(function(data, status, headers, config){
+                var positivo = "";
+                var negativo = "";
+                var neutral = "";
+                var data =  data['rows'];
+                for(var i=0; i<data.length; i++) {
+                    var categoria = data[i]['key'][0];
+                    var sentimiento = data[i]['key'][1];
+
+                    var valor = data[i]['value'];
+
+                    if(sentimiento == "negative"){
+
+                        negativo+=  ',"'+ categoria + '":' + JSON.stringify(valor);
+                    }else if(sentimiento == "positive"){
+                        positivo+= ',"'+ categoria + '":' + JSON.stringify(valor);
+                    }else if(sentimiento == "neutral"){
+                        neutral+= ',"'+ categoria + '":' + JSON.stringify(valor);
+                    };
+
+
+
+                };
+
+                negativo = JSON.parse( "{"+ negativo.slice(1) + "}");
+                positivo = JSON.parse( "{"+ positivo.slice(1) + "}");
+                neutral = JSON.parse( "{"+ neutral.slice(1) + "}");
+                console.log(negativo);
+                console.log(positivo);
+                followersSentiment = [positivo,neutral,negativo];
+            });
+        }
+
         $scope.getTweetsRetweets = getTweetsRetweets;
         $scope.getTweetsLikes = getTweetsLikes;
         $scope.getTweets = getTweets;
-        /*var so='(' + ObtenerHijos('Categorias').slice(2) + ')';
-         getTweets(so);
-         getTweetsLikes(so);
-         getTweetsRetweets(so);
-         */
+        $scope.getTweetsSentiment = getTweetsSentiment;
+
 
         $('#follow-botton').click(function(){
             $('#like').collapse('hide');
@@ -80,6 +115,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
         var subCategorias = JSON.parse(dato);
         var followers = {};
         var categoriasFollowers = [];
+
+        getTweetsSentiment();  //0 -> positivo, 1 -> neutral, 2 -> negativo
 
 
         $scope.bubbleChart = function() {
@@ -292,7 +329,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
 
 
-                         function seriesBubble(categoria){
+                         function seriesBubble(categoria,sentiment){
                              var series = [];
                              var hijos = diccionario_categoria[categoria]['hijos'];
                              if(subCategorias[hijos[0]]){
@@ -305,23 +342,82 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
                                  //subHijos = ObtenerHijos(hijo).replace(/\"/g,'').slice(1).split("*");
                                  subHijos = ObtenerPreHijos(hijo);
-                                 console.log(hijo);
-                                 console.log(subHijos);
+
 
                                  //obtengo los hijos del hijo
                                  for(var j in subHijos) {     //itero en estos subhijos
                                      var name = subHijos[j];
                                      var subHijo = diccionario_categoria[name]["hijos"][0];
-
+                                     var dato = {};
                                      //ahora lo agrego a un archivo json:
+                                     if(followers[subHijo]){
 
-                                     var data = followers[subHijo];
-                                     var dato = {  //creo los datos     para 1 elemento de 1 serie del bubble
-                                         name: name,
-                                         x: data["followers"],
-                                         y: data["likes"],
-                                         z: diccionario_categoria[name]["datos"]["total"]
+                                         //0 -> positivo, 1 -> neutral, 2 -> negativo
+                                         var data = followers[subHijo];
+                                         var nulo = dato = {name: name,x: 0, y: 0, z: 0 };
+
+                                         if(sentiment == "positivo"){
+                                             var data2 = followersSentiment[0][subHijo];
+
+                                             if(data2) {
+                                                 dato = {
+                                                     name: name,
+                                                     x: data2["followers"],
+                                                     y: data2["likes"],
+                                                     z: diccionario_categoria[name]["datos"]["positivos"]
+
+                                                 };
+
+                                             }else{
+                                                 dato = nulo;
+                                             };
+
+                                         }else if(sentiment == "neutral"){
+                                             var data2 = followersSentiment[1][subHijo];
+
+                                             if(data2) {
+                                                 dato = {
+                                                     name: name,
+                                                     x: data2["followers"],
+                                                     y: data2["likes"],
+                                                     z: diccionario_categoria[name]["datos"]["neutrales"]
+                                                 };
+
+                                             }else{
+                                                 dato = nulo;
+                                             };
+                                         }else if(sentiment == "negativo"){
+                                             var data2 = followersSentiment[2][subHijo];
+
+                                             if(data2) {
+                                                 dato = {
+                                                     name: name,
+                                                     x: data2["followers"],
+                                                     y: data2["likes"],
+                                                     z: diccionario_categoria[name]["datos"]["negativos"]
+                                                 };
+
+                                             }else{
+                                                 dato = nulo;
+                                             };
+                                         }else{
+                                             dato = {  //creo los datos     para 1 elemento de 1 serie del bubble
+                                                 name: name,
+                                                 x: data["followers"],
+                                                 y: data["likes"],
+                                                 z: diccionario_categoria[name]["datos"]["total"]
+                                             };
+                                         };
+
+                                     }else{
+                                         dato = {  //creo los datos     para 1 elemento de 1 serie del bubble
+                                             name: name,
+                                             x: 0,
+                                             y: 0,
+                                             z: diccionario_categoria[name]["datos"]["total"]
+                                         };
                                      };
+
                                      datos.push(dato);   //almaceno un conjunto de datos de 1 serie del bubble
                                  }
                                  series.push(datos); //guardo la serie
@@ -500,7 +596,9 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
                             // size of the diagram
                             var viewerWidth = $("#hierarchy").width();
-                            var viewerHeight = $("#chart2").height();
+                            var viewerHeight = $("#chart2").height()+ $("#tagbubble").height();
+
+
 
                             var tree = d3.layout.tree()
                                 .size([viewerHeight, viewerWidth]);
@@ -564,8 +662,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
                                 scale = zoomListener.scale();
                                 x = -source.y0;
                                 y = -source.x0;
-                                x = x * scale + viewerWidth / 4;
-                                y = y * scale +viewerHeight / 2;
+                                x = x * scale + viewerWidth;
+                                y = y * scale + viewerHeight;
                                 d3.select('g').transition()
                                     .duration(duration)
                                     .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");
@@ -630,6 +728,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
                                 };
 
+                                $('#radio-todos').prop("checked", true);
+
                             }
 
                             function update(source) {
@@ -649,7 +749,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
                                     }
                                 };
                                 childCount(0, root);
-                                var newHeight = d3.max(levelWidth) * 25; // 25 pixels per line
+                                var newHeight = d3.max(levelWidth) * 40; // 25 pixels per line
                                 tree = tree.size([newHeight, viewerWidth]);
 
                                 // Compute the new tree layout.
@@ -805,8 +905,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
                             // Define the root
                             root = treeData;
-                            root.x0 = viewerHeight;
-                            root.y0 = 0;
+                            root.x0 = 1000;
+                            root.y0 = 1000;
 
                             // Layout the tree initially and center on the root node.
 
@@ -824,8 +924,11 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
                             }
 
                             root.children.forEach(collapse);
+
                             update(root);
                             centerNode(root);
+                            update(root);
+
                         };
 
 
@@ -834,11 +937,26 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
 
                         //Para mantener tamano de grafico de dona y barra
-                        document.getElementById("collap1").style.height =   $("#bar3").height()+ "px";
+                        //document.getElementById("collap1").style.height =   $("#bar3").height()+ "px";
                         document.getElementById("tweetsList1").style.height = $("#tagbubble").height()+ "px";
                         document.getElementById("tweetList1.5").style.height = $("#bubble2").height()+ "px";
 
+                        console.log(followersSentiment);
+                        //Click por sentimiento:
+                        document.getElementById('radio-todos').onclick = function(){
+                            bubble(seriesBubble($scope.currentCategory,'nn'),"bubble2",diccionario_categoria[$scope.currentCategory]["hijos"]);
+                        };
+                        document.getElementById('radio-positivo').onclick = function(){
+                            bubble(seriesBubble($scope.currentCategory,'positivo'),"bubble2",diccionario_categoria[$scope.currentCategory]["hijos"]);
+                        };
 
+                        document.getElementById('radio-negativo').onclick = function(){
+                            bubble(seriesBubble($scope.currentCategory,'negativo'),"bubble2",diccionario_categoria[$scope.currentCategory]["hijos"]);
+                        };
+
+                        document.getElementById('radio-neutral').onclick = function(){
+                            bubble(seriesBubble($scope.currentCategory,'neutral'),"bubble2",diccionario_categoria[$scope.currentCategory]["hijos"]);
+                        };
 
 
 

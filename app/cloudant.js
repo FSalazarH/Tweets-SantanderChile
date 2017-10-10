@@ -1,5 +1,5 @@
 //Query
-var credenciales = 'https://4bbbd4c3-62d1-41b8-b551-4cdadcdea1da-bluemix:e8ea9241313975eece6cc3c8f884f86b4484c84b6fe6608653b407002578ebe3@4bbbd4c3-62d1-41b8-b551-4cdadcdea1da-bluemix.cloudant.com'
+var credenciales = 'https://4bbbd4c3-62d1-41b8-b551-4cdadcdea1da-bluemix:e8ea9241313975eece6cc3c8f884f86b4484c84b6fe6608653b407002578ebe3@4bbbd4c3-62d1-41b8-b551-4cdadcdea1da-bluemix.cloudant.com';
 
 exports.anio = function(req, res){
     var request = require('request');
@@ -219,6 +219,21 @@ exports.tweets_by_sentiment = function(req, res){
         }
     });
 };
+
+
+
+exports.tweets_category_sentiment = function(req, res){
+    var request = require('request');
+    request(credenciales + '/clasificados/_design/bubbleData/_view/sum_data_category_sentiment?group=True', function(error, response, body){
+        if(!error && response.statusCode == 200) {
+            res.json(JSON.parse(body));
+        }
+        else {
+            console.log("Error "+response.statusCode);
+        }
+    });
+};
+
 
 exports.totalLikesCategory= function(req, res){
     var request = require('request');
