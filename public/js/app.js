@@ -16,6 +16,11 @@ mainApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: '/sentiments',
                 controller: 'sentimentsController'
             }).
+            when('/vivo', {
+                templateUrl: '/vivo',
+                controller: 'vivoController'
+                            
+            }).
             otherwise({
                 redirectTo: '/sentiments'
             });

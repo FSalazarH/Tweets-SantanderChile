@@ -1,9 +1,6 @@
-
-
 mainAppControllers.controller('categoryControllers',['$scope','$http',
 
     function ($scope, $http) {
-
 
         var categoryQuery = ""; //Aca va el nombre de la categoria a consultar (puedes ver el arreglo de subCategorias con los nombres reales)
         var followersSentiment = [];
@@ -981,11 +978,5 @@ mainAppControllers.controller('categoryControllers',['$scope','$http',
 
 
         $scope.bubbleChart();
-
-
-
-
-
-
     }
 ]);

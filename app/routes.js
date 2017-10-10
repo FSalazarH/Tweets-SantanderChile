@@ -4,20 +4,24 @@ module.exports = function(app, cloudant) {
         res.render('index');
     });
 
-    app.get('/totales', function(req, res) {
+    app.get('/totales', function(req, res){
         res.render('totales');
     });
 
-    app.get('/categorias', function(req, res) {
+    app.get('/categorias', function(req, res){
         res.render('categorias');
     });
 
-    app.get('/tweets', function(req, res) {
+    app.get('/tweets', function(req, res){
         res.render('tweets');
     });
 
-    app.get('/sentiments', function(req, res) {
+    app.get('/sentiments', function(req, res){
         res.render('sentiments');
+    });
+
+    app.get('/vivo', function(req, res){
+        res.render('vivo');
     });
 
     //Importante: Este es el get que obtiene los totales 
