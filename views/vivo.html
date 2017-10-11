@@ -1,8 +1,95 @@
-<div class="callout callout-info">
-    <center>
+<style>
+    .node {
+        cursor: pointer;
+    }
+    .node circle {
+        fill: #fff;
+        stroke: steelblue;
+        stroke-width: 3px;
+    }
+    .node text {
+        font: 14px sans-serif;
+        fill: black;
+    }
+    .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
 
-    <h2> <i class="icon fa fa-info"></i> Proximamente!
-    <br>
-    </h2>
-        </center>
-</div>
+    }
+    .templink {
+        fill: none;
+        stroke: red;
+        stroke-width: 3px;
+    }
+
+
+</style>
+
+<section class="content">
+
+    <div class="row" >
+
+
+        <div class="col-md-6">
+            <div class="box box-primary" id="collap1" >
+                <div class="box-header with-border" style="height:auto;border-radius: 10px;">
+                    <i class="fa fa-cubes" ></i>
+
+                    <h3 class="box-title">Tweets Totales por Categorías (Cantidad de menciones)</h3>
+
+
+                </div>
+                <div class="box-body" >
+                    <div id ="hierarchy2"></div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="box box-primary" id="tagbubble" >
+                <div class="box-header with-border">
+                    <i class="fa fa-circle" ></i>
+
+                    <h3 class="box-title">  Nivel de Exposición en Twitter sobre: {{currentCategory}}</h3>
+
+
+                </div>
+
+
+                <div class="box-body" id="bottonbubble">
+                    <center>
+                        <label class="radio-inline">
+                            <input  id="radio-todos" type="radio" name="optradio" checked="checked" > Todos
+                        </label>
+                        <label class="radio-inline">
+                            <input id="radio-positivo" type="radio" name="optradio"> Positivos
+                        </label>
+                        <label class="radio-inline">
+                            <input id="radio-negativo" type="radio" name="optradio"> Negativos
+                        </label>
+                        <label class="radio-inline">
+                            <input  id="radio-neutral" type="radio" name="optradio"> Neutrales
+                        </label>
+                    </center>
+                </div>
+
+                <div id ="bubble2"></div>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+</section>
+<script src="bootstrap/js/d3.v3.min.js"> </script>

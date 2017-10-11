@@ -247,17 +247,6 @@ exports.totalLikesCategory= function(req, res){
     });
 };
 
-exports.totalCategory= function(req, res){
-    var request = require('request');
-    request(credenciales+'/clasificados/_design/bubbleData/_view/category_count?group=true', function(error, response, body){
-        if(!error && response.statusCode == 200) {
-            res.json(JSON.parse(body));
-        }
-        else {
-            console.log("Error "+response.statusCode);
-        }
-    });
-};
 
 exports.monthData = function(req, res){
     var request = require('request');

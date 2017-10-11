@@ -43,7 +43,6 @@ module.exports = function(app, cloudant) {
 
     //bubble data
     app.get('/queryTotalLikesCategory', cloudant.totalLikesCategory);
-    app.get('/queryTotalCategory', cloudant.totalCategory);
 
     app.get('/queryTweetsbySentiment/:sentiment/:inicio/:fin', cloudant.tweets_by_sentiment);
     app.get('/queryMonth/:year/:month', cloudant.monthData);
