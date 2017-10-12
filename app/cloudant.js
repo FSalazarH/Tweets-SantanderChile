@@ -250,7 +250,18 @@ exports.tweets_by_sentiment = function(req, res){
     });
 };
 
-
+/* Bubble Historic */
+exports.totalLikesCategory= function(req, res){
+    var request = require('request');
+    request(credenciales+'/clasificados/_design/bubbleData/_view/sum_data_category?group=true', function(error, response, body){
+        if(!error && response.statusCode == 200) {
+            res.json(JSON.parse(body));
+        }
+        else {
+            console.log("Error "+response.statusCode);
+        }
+    });
+};
 
 exports.tweets_category_sentiment = function(req, res){
     var request = require('request');
@@ -264,17 +275,28 @@ exports.tweets_category_sentiment = function(req, res){
     });
 };
 
-
-exports.totalLikesCategory= function(req, res){
+/* Bubble - Last 24 hours */
+exports.tweets_category_sentiment_last24 = function(req,res){
     var request = require('request');
-    request(credenciales+'/clasificados/_design/bubbleData/_view/sum_data_category?group=true', function(error, response, body){
-        if(!error && response.statusCode == 200) {
+    request(credenciales + '/clasificados/_design/bubbleData/_view/sum_data_category_sentiment_last24?group=True', function(error, response, body){
+        if(!error && response.statusCode == 200){
             res.json(JSON.parse(body));
         }
-        else {
+        else{
             console.log("Error "+response.statusCode);
         }
-    });
+    })
+};
+exports.totalLikesCategoryLast24 = function(req,res){
+    var request = require('request');
+    request(credenciales +'/clasificados/_design/bubbleData/_view/sum_data_category_last24?group=true', function(error, response, body){
+        if(!error && response.statusCode == 200){
+            res.json(JSON.parse(body));
+        }
+        else{
+            console.log("Error "+response.statusCode);
+        }
+    })
 };
 
 

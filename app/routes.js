@@ -30,23 +30,24 @@ module.exports = function(app, cloudant) {
     app.get('/queryNoClasificados', cloudant.noClasificados);
     //totales mensuales
     app.get('/queryTotalMensual', cloudant.totalMensual);
-
     app.get('/queryCategorias', cloudant.categorias);
     app.get('/queryAnio', cloudant.anio); //mejorar
     app.get('/queryTweetsCategory/:category', cloudant.tweets_category);
     app.get('/queryTweetsCategoryLikes/:category', cloudant.tweets_category_likes);
     app.get('/queryTweetsCategoryRetweets/:category', cloudant.tweets_category_retweets);
-
-    //query for live tweets
-    app.get('/queryliveTweets/:category', cloudant.live_tweets);
-
-
-    app.get('/queryTweetsCategorySentiment', cloudant.tweets_category_sentiment);
-
-
-    //bubble data
-    app.get('/queryTotalLikesCategory', cloudant.totalLikesCategory);
-
     app.get('/queryTweetsbySentiment/:sentiment/:inicio/:fin', cloudant.tweets_by_sentiment);
     app.get('/queryMonth/:year/:month', cloudant.monthData);
+
+
+    /* Query para ver los tweets de las últimas 24 horas */
+    app.get('/queryliveTweets/:category', cloudant.live_tweets);
+
+    /* Query para la data histórica del Bubble Chart */
+    app.get('/queryTweetsCategorySentiment', cloudant.tweets_category_sentiment);
+    app.get('/queryTotalLikesCategory', cloudant.totalLikesCategory);
+
+
+    /* Vistas para la data dinámica de las últimas 24 horas del Bubble Chart */
+    app.get('/queryTweetsCategorySentimentLast24', cloudant.tweets_category_sentiment_last24);
+    app.get('/queryTotalLikesCategoryLast24', cloudant.totalLikesCategoryLast24);
 };
