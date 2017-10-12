@@ -10,7 +10,17 @@ mainAppControllers.controller('vivoController',['$scope','$http',
         function getLiveTweets(query){
             $http({method: 'GET', url:'/queryliveTweets/' + query}).
             success(function(data, status, headers, config){
-                $scope.liveTweets = data;
+                //Seteando los millisegundos de hace 24 horas 
+                var now = Date.now();
+                var last_24 = now-86400000;
+                var new_data = [];
+                var data = data;
+                for(var i=0; i<data.length; i++){
+                    if(data[i]['created_at']>last_24){
+                        new_data.push(data[i]['created_at']);                 
+                    }
+                }
+                $scope.liveTweets = new_data;
             });
         };
 
@@ -236,7 +246,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
 
 
                 var data2= JSON.parse(funcollapse("Categorias"));
-                console.log(data2);
                 function Arbol(treeData) {
                     // Calculate total nodes, max label length
                     var totalNodes = 0;
@@ -558,8 +567,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     centerNode(root);
                 };
                 Arbol(data2);
-
-                document.getElementById("tweetsList1.5").style.height = $("#hierarchy").height()+ "px";
         }).error(function (data, status, headers, config) {
             console.log("data:" + data.message);
         });
