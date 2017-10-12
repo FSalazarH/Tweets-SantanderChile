@@ -17,7 +17,7 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                 var data = data;
                 for(var i=0; i<data.length; i++){
                     if(data[i]['created_at']>last_24){
-                        new_data.push(data[i]['created_at']);                 
+                        new_data.push(data[i]);                 
                     }
                 }
                 $scope.liveTweets = new_data;
