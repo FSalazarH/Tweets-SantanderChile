@@ -84,7 +84,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
             $('#like').collapse('hide');
             $('#retweets').collapse('show');
         });
-
         //
         //Seccion para crear las categorias de la base de Datos y convertirlas a un diccionario:
         //

@@ -206,12 +206,8 @@ mainAppControllers.controller('mainController', ['$scope','$http', '$window',
               xLabelMargin: 10
             });
             /* Fin Gráfico Barras Morris Anual */
-
-
         }).
         error(function(data, status, headers, config){
-
-
         });
 
         //Se encarga de mantener el tamaño de los graficos:

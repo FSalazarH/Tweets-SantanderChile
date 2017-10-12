@@ -102,6 +102,7 @@ exports.categorias = function(req, res){
     });
 };
 
+//For historic data
 exports.tweets_category = function(req, res){
     var request = require('request');
     var category = req.params.category;
@@ -131,7 +132,6 @@ exports.tweets_category = function(req, res){
             console.log("Error "+response.statusCode);
         }
     });
-
 };
 
 exports.tweets_category_likes = function(req, res){
@@ -176,6 +176,36 @@ exports.tweets_category_retweets = function(req, res){
             var tweetsData = jsonData.rows;
             var array = [];
 
+            for(var i=0; i<tweetsData.length; i++){
+                array.push(tweetsData[i].fields);
+                if(tweetsData[i].fields.sentiment  == "negative"){
+                    array[i]["color"] = "#CC0000";
+                }else if(tweetsData[i].fields.sentiment  == "neutral"){
+                    array[i]["color"] = "#616161";
+                }else{
+                    array[i]["color"] = "#00a65a";
+                };
+            }
+            res.json(array);
+        }
+        else {
+            console.log("Error "+response.statusCode);
+        }
+    });
+};
+
+
+//For live data
+exports.live_tweets = function(req, res){
+    var request = require('request');
+    var category = req.params.category;
+    var url = credenciales+'/clasificados/_design/tweets_category/_search/tweets_category?q=';
+    var query = 'category:' + category + '&sort=["-created_at"]&limit=10'
+    request(url + query, function(error, response, body){
+        if(!error && response.statusCode == 200) {
+            var jsonData = JSON.parse(body);
+            var tweetsData = jsonData.rows;
+            var array = [];
             for(var i=0; i<tweetsData.length; i++){
                 array.push(tweetsData[i].fields);
                 if(tweetsData[i].fields.sentiment  == "negative"){

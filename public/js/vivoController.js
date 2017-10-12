@@ -5,6 +5,50 @@
 mainAppControllers.controller('vivoController',['$scope','$http',
 
     function ($scope, $http) {
+        //MODIFICAR ACÄ
+        function getTweets(query){
+            $http({method: 'GET', url:'/queryTweetsCategory/' + query}).
+            success(function(data, status, headers, config){
+                $scope.tweets = data;
+            });
+        };
+
+        //Ejecución de la Query
+        function getTweetsLikes(query){
+            $http({method: 'GET', url:'/queryTweetsCategoryLikes/' + query}).
+            success(function(data, status, headers, config){
+                $scope.tweetsLikes = data;
+            });
+        }
+
+        //Query ordenando por #retweets
+        function getTweetsRetweets(query){
+            $http({method: 'GET', url:'/queryTweetsCategoryRetweets/' + query}).
+            success(function(data, status, headers, config){
+                $scope.tweetsRetweets = data;
+            });
+        }
+        $scope.getTweetsRetweets = getTweetsRetweets;
+        $scope.getTweetsLikes = getTweetsLikes;
+        $scope.getTweets = getTweets;
+
+        $('#follow-botton').click(function(){
+            $('#like').collapse('hide');
+            $('#retweets').collapse('hide');
+            $('#follow').collapse('show');
+        });
+
+        $('#like-botton').click(function () {
+            $('#follow').collapse('hide');
+            $('#retweets').collapse('hide');
+            $('#like').collapse('show');
+        });
+
+        $('#retweets-botton').click(function () {
+            $('#follow').collapse('hide');
+            $('#like').collapse('hide');
+            $('#retweets').collapse('show');
+        });
 
         var listaCategoriaBD = [
             "cajero","caida_portalSantander","servicios_portalSantander", "solicitudes_tarjeta",
@@ -28,7 +72,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                 //Seteando los millisegundos de hace 24 horas 
                 var now = Date.now();
                 var last_24 = now-86400000;
-                console.log(last_24);
 
                 /*Se obtienen los datos de hace 24 horas*/
                 for(var i=0; i<data_jerarquia.length; i++) {
