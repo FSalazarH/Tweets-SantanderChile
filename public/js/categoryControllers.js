@@ -29,10 +29,8 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
             });
         }
 
-
         //Tweets por sentimiento para modificar grafico bubble.
         function getTweetsSentiment(){
-
             $http({method: 'GET', url:'/queryTweetsCategorySentiment'}).
             success(function(data, status, headers, config){
                 var positivo = "";
@@ -54,8 +52,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                         neutral+= ',"'+ categoria + '":' + JSON.stringify(valor);
                     };
 
-
-
                 };
 
                 negativo = JSON.parse( "{"+ negativo.slice(1) + "}");
@@ -69,14 +65,12 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
         $scope.getTweetsLikes = getTweetsLikes;
         $scope.getTweets = getTweets;
         $scope.getTweetsSentiment = getTweetsSentiment;
-
         $rootScope.prueba = 4;
 
         $('#follow-botton').click(function(){
             $('#like').collapse('hide');
             $('#retweets').collapse('hide');
             $('#follow').collapse('show');
-
         });
 
         $('#like-botton').click(function () {
@@ -100,8 +94,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
             "transacciones_tarjeta", "clonacion_tarjeta",    "phishing", "sernac", "reclamo", "llamadas_vox",
             "login_portalSantander", "consultas",  "credito", "fraude", "seguros", "cuentaCorriente", "sucursal",
             "workCafe","chatOnline", "bloqueos_vox", "agradecimiento", "app", "beneficios"];
-
-
         var dato = '{"'+listaCategoriaBD[0] + '":{"total": 0, "positivos": 0, "negativos": 0, "neutrales": 0}';
         for(var i=1; i<listaCategoriaBD.length; i++){
             dato= (dato + ',"' + listaCategoriaBD[i] + '":{"total": 0, "positivos": 0, "negativos": 0, "neutrales": 0}');
@@ -115,9 +107,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
 
         getTweetsSentiment();  //0 -> positivo, 1 -> neutral, 2 -> negativo
 
-
         $rootScope.bubbleChart = function() {
-
             $http({
                 method: 'GET',
                 url: '/queryTotalLikesCategory'
@@ -185,7 +175,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                     function SumaHijos(category){
 
                         var cat = diccionario_categoria[category];
-
                         for(var i in cat["hijos"]){
                             var nombre = cat["hijos"][i];
                             // Condicion para los ramas mas bajas del grafico
@@ -209,13 +198,11 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                             }
 
                         };
-
                     };
 
                     //
                     // Funcion que entrega los hijos en un string unidos por un "or"
                     //
-
                     function ObtenerHijos(category){
                         var data = "";
                         var hijos = diccionario_categoria[category]["hijos"];
@@ -244,7 +231,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                         };
                         return(data);
                     };
-
 
                     function bubble(data,element,category) {
                         var series = [];
@@ -319,8 +305,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                             series: series
                         });
                     };
-
-
 
                     function seriesBubble(categoria,sentiment){
                         var series = [];
@@ -417,10 +401,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                         };
                         return series;
                     };
-
-
-
-
                     //
                     //Seteando el diccionario_categoria segun sus hijos:
                     //
@@ -431,7 +411,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
 
 
                     //Vox
-
                     diccionario_categoria['Vox'].hijos = ['Llamadas Vox', 'Bloqueos Vox'];
 
                     //Precencial
@@ -490,7 +469,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                     };
 
                     // Funcion que une los elementos del ser mostrados en el collapse chart
-                    function  funcollapse(nombre){
+                    function funcollapse(nombre){
                         if(!(diccionario_categoria[nombre])){
                             return "";
                         };
@@ -553,11 +532,7 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                     var bar = my_morrys_bar(dataOrg,"chart2");
 
                     //Seccion para cargar los tweets de categorias.
-
-
-
                     var sd ='(' + ObtenerHijos("Categorias").replace(/\*/g,'or').slice(2) + ')';
-
 
                     //Para iniciar el grafico de burbujas:
                     bubble(seriesBubble('Categorias'),"bubble2",diccionario_categoria["Categorias"]["hijos"]);
@@ -625,30 +600,21 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                             return d.children && d.children.length > 0 ? d.children : null;
                         });
 
-
-
-
                         // Define the zoom function for the zoomable tree
 
                         function zoom() {
                             svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
                         }
 
-
                         // define the zoomListener which calls the zoom function on the "zoom" event constrained within the scaleExtents
                         var zoomListener = d3.behavior.zoom().scaleExtent([0.1, 3]).on("zoom", zoom);
-
-
-
                         // define the baseSvg, attaching a class for styling and the zoomListener
                         var baseSvg = d3.select("#hierarchy").append("svg")
                             .attr("width", viewerWidth)
                             .attr("height", viewerHeight)
                             .call(zoomListener);
 
-
                         // Funcion para centrar el nodo clickeado
-
                         function centerNode(source) {
                             scale = zoomListener.scale();
                             x = -source.y0;
@@ -950,23 +916,15 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
 
 
                 });
-
-
-
             }).error(function (data, status, headers, config) {
                 console.log("data:" + data.message);
             });
-
         };
-
-
         //
         //Fin de subcategorias
         //
 
         //Query para los datos por categoria
-
-
         $rootScope.bubbleChart();
     }
 ]);

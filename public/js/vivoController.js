@@ -11,8 +11,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
             "transacciones_tarjeta", "clonacion_tarjeta",    "phishing", "sernac", "reclamo", "llamadas_vox",
             "login_portalSantander", "consultas",  "credito", "fraude", "seguros", "cuentaCorriente", "sucursal",
             "workCafe","chatOnline", "bloqueos_vox", "agradecimiento", "app", "beneficios"];
-
-
         var dato = '{"'+listaCategoriaBD[0] + '":{"total": 0, "positivos": 0, "negativos": 0, "neutrales": 0}';
         for(var i=1; i<listaCategoriaBD.length; i++){
             dato= (dato + ',"' + listaCategoriaBD[i] + '":{"total": 0, "positivos": 0, "negativos": 0, "neutrales": 0}');
@@ -23,32 +21,36 @@ mainAppControllers.controller('vivoController',['$scope','$http',
         var subCategorias = JSON.parse(dato);
         $http({method: 'GET', url:'/queryCategorias'}).
             success(function(data, status, headers, config) {
-
+                // Código para obtener los totales de cada subCategoria:
                 var data_jerarquia = data["rows"];
                 var sentiment = "";
-                // Código para obtener los totales de cada subCategoria:
 
+                //Seteando los millisegundos de hace 24 horas 
+                var now = Date.now();
+                var last_24 = now-86400000;
+                console.log(last_24);
+
+                /*Se obtienen los datos de hace 24 horas*/
                 for(var i=0; i<data_jerarquia.length; i++) {
-                    var subCategoria = data_jerarquia[i]["key"][0];
-                    var sentimentSubcategoria = data_jerarquia[i]["key"][1];
+                    var created_at = data_jerarquia[i]["key"][2];
+                    if(created_at>=last_24){
+                        var subCategoria = data_jerarquia[i]["key"][0];
+                        var sentimentSubcategoria = data_jerarquia[i]["key"][1];            
                     if (sentimentSubcategoria == "negative") {
                         sentiment = "negativos";
                     } else if (sentimentSubcategoria == "positive") {
                         sentiment = "positivos";
                     } else {
                         sentiment = "neutrales"
-                    }
-                    ;
-
+                    };
                     subCategorias[subCategoria][sentiment] += data_jerarquia[i]["value"];
                     subCategorias[subCategoria]["total"] += data_jerarquia[i]["value"];
-
+                    };    
                 };
                 $('#chart2').empty();
 
-
                 /*Lista Categorias a ser mostradas en el grafico de barras: */
-                var listaJerarquias = ['Llamadas Vox', 'Bloqueos Vox',  'Sucursal', 'Cajero', 'WorkCafe',
+                var listaJerarquias = ['Llamadas Vox', 'Bloqueos Vox', 'Sucursal', 'Cajero', 'WorkCafe',
                     'Aplicacion Santander', 'Login', 'Caida Portal',
                     'Servicios Portal', 'Chat Online',  'Cuenta Corriente', 'Credito',
                     'Seguros',  'Solicitudes', 'Transacciones', 'Clonacion',
@@ -66,14 +68,10 @@ mainAppControllers.controller('vivoController',['$scope','$http',
 
                 //Se crea el diccionario en base al string dato
                 var diccionario_categoria = JSON.parse(dato);
-
                 // Variable que suma los hijos de cada categoria
 
-
                 function SumaHijos(category){
-
                     var cat = diccionario_categoria[category];
-
                     for(var i in cat["hijos"]){
                         var nombre = cat["hijos"][i];
                         // Condicion para los ramas mas bajas del grafico
@@ -84,20 +82,15 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                             diccionario_categoria[category]["datos"].negativos += hijo.negativos;
                             diccionario_categoria[category]["datos"].neutrales += hijo.neutrales;
 
-
-
-                            // Condicion para lsa ramas mas altas
+                            // Condicion para las ramas mas altas
                         }else if(diccionario_categoria[nombre]["datos"].total != 0){
                             var hijo2 = diccionario_categoria[nombre]["datos"];
                             diccionario_categoria[category]["datos"].total += hijo2.total;
                             diccionario_categoria[category]["datos"].positivos += hijo2.positivos;
                             diccionario_categoria[category]["datos"].negativos += hijo2.negativos;
                             diccionario_categoria[category]["datos"].neutrales += hijo2.neutrales;
-
                         }
-
                     };
-
                 };
 
                 //
@@ -132,8 +125,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     };
                     return(data);
                 };
-
-
                 //
                 //Seteando el diccionario_categoria segun sus hijos:
                 //
@@ -142,12 +133,10 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                 diccionario_categoria['Categorias'].hijos =  ['Vox','Presencial','Canales Criticos','Productos Persona',
                     'Seguridad', 'Atencion al Cliente'];
 
-
                 //Vox
-
                 diccionario_categoria['Vox'].hijos = ['Llamadas Vox', 'Bloqueos Vox'];
 
-                //Precencial
+                //Presencial
                 diccionario_categoria['Presencial'].hijos = ['Sucursal', 'Cajero', 'WorkCafe'];
 
                 //Canales Criticos
@@ -196,14 +185,13 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                 //
                 //Fin de setiar el diccionario
                 //
-
                 //Suma los totales de los hijos y los entrega en diccionario categorias
                 for(var i in listaJerarquias){
                     SumaHijos(listaJerarquias[i]);
                 };
 
                 // Funcion que une los elementos del ser mostrados en el collapse chart
-                function  funcollapse(nombre){
+                function funcollapse(nombre){
                     if(!(diccionario_categoria[nombre])){
                         return "";
                     };
@@ -218,7 +206,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                         };
                         data += '   ,"children":[' + funcollapse(hijos[0]);
 
-
                         for(var i=1;i<hijos.length;i++){
                             var hijo=hijos[i];
                             data+="," + funcollapse(hijo);
@@ -229,9 +216,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     data+="}";
                     return data;
                 };
-
-
-
 
                 var data2= JSON.parse(funcollapse("Categorias"));
                 console.log(data2);
@@ -282,20 +266,13 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                         return d.children && d.children.length > 0 ? d.children : null;
                     });
 
-
-
-
                     // Define the zoom function for the zoomable tree
-
                     function zoom() {
                         svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
                     }
 
-
                     // define the zoomListener which calls the zoom function on the "zoom" event constrained within the scaleExtents
                     var zoomListener = d3.behavior.zoom().scaleExtent([0.1, 3]).on("zoom", zoom);
-
-
 
                     // define the baseSvg, attaching a class for styling and the zoomListener
                     var baseSvg = d3.select("#hierarchy2").append("svg")
@@ -303,9 +280,7 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                         .attr("height", viewerHeight)
                         .call(zoomListener);
 
-
                     // Funcion para centrar el nodo clickeado
-
                     function centerNode(source) {
                         scale = zoomListener.scale();
                         x = -source.y0;
@@ -320,7 +295,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     }
 
                     // Funcion para expandir los nodos
-
                     function toggleChildren(d) {
                         if (d.children) {
                             d._children = d.children;
@@ -333,7 +307,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     }
 
                     // Toggle children on click.
-
                     function click(d) {
                         if (d3.event.defaultPrevented) return; // click suppressed
                         d = toggleChildren(d);
@@ -343,9 +316,7 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                         if(d.name) {
                             var categoria = d.name.split(" (")[0];
                             var data3 = [];
-
                             //Datos para el grafico de barras morris
-
                             for(var i in diccionario_categoria[categoria]["hijos"]){
                                 var nombre = diccionario_categoria[categoria]["hijos"][i];
                                 if(diccionario_categoria[nombre]){
@@ -542,10 +513,7 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     root.y0 = 0;
 
                     // Layout the tree initially and center on the root node.
-
                     update(root);
-
-
 
                     // Para aumentar la distancia entre los nodos
                     function collapse(d) {
@@ -560,31 +528,9 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     update(root);
                     centerNode(root);
                 };
-
-
                 Arbol(data2);
-
-
-
-
-
         }).error(function (data, status, headers, config) {
             console.log("data:" + data.message);
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 ]);
