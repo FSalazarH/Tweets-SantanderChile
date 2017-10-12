@@ -38,7 +38,7 @@ module.exports = function(app, cloudant) {
     app.get('/queryTweetsCategoryRetweets/:category', cloudant.tweets_category_retweets);
 
     //query for live tweets
-    app.get('/liveTweets/:category', cloudant.live_tweets);
+    app.get('/queryliveTweets/:category', cloudant.live_tweets);
 
 
     app.get('/queryTweetsCategorySentiment', cloudant.tweets_category_sentiment);

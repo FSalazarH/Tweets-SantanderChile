@@ -65,7 +65,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
         $scope.getTweetsLikes = getTweetsLikes;
         $scope.getTweets = getTweets;
         $scope.getTweetsSentiment = getTweetsSentiment;
-        $rootScope.prueba = 4;
 
         $('#follow-botton').click(function(){
             $('#like').collapse('hide');

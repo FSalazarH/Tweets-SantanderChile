@@ -5,50 +5,16 @@
 mainAppControllers.controller('vivoController',['$scope','$http',
 
     function ($scope, $http) {
+
         //MODIFICAR ACÄ
-        function getTweets(query){
-            $http({method: 'GET', url:'/queryTweetsCategory/' + query}).
+        function getLiveTweets(query){
+            $http({method: 'GET', url:'/queryliveTweets/' + query}).
             success(function(data, status, headers, config){
-                $scope.tweets = data;
+                $scope.liveTweets = data;
             });
         };
 
-        //Ejecución de la Query
-        function getTweetsLikes(query){
-            $http({method: 'GET', url:'/queryTweetsCategoryLikes/' + query}).
-            success(function(data, status, headers, config){
-                $scope.tweetsLikes = data;
-            });
-        }
-
-        //Query ordenando por #retweets
-        function getTweetsRetweets(query){
-            $http({method: 'GET', url:'/queryTweetsCategoryRetweets/' + query}).
-            success(function(data, status, headers, config){
-                $scope.tweetsRetweets = data;
-            });
-        }
-        $scope.getTweetsRetweets = getTweetsRetweets;
-        $scope.getTweetsLikes = getTweetsLikes;
-        $scope.getTweets = getTweets;
-
-        $('#follow-botton').click(function(){
-            $('#like').collapse('hide');
-            $('#retweets').collapse('hide');
-            $('#follow').collapse('show');
-        });
-
-        $('#like-botton').click(function () {
-            $('#follow').collapse('hide');
-            $('#retweets').collapse('hide');
-            $('#like').collapse('show');
-        });
-
-        $('#retweets-botton').click(function () {
-            $('#follow').collapse('hide');
-            $('#like').collapse('hide');
-            $('#retweets').collapse('show');
-        });
+        $scope.getLiveTweets = getLiveTweets;
 
         var listaCategoriaBD = [
             "cajero","caida_portalSantander","servicios_portalSantander", "solicitudes_tarjeta",
@@ -260,6 +226,15 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     return data;
                 };
 
+
+                //Seccion para cargar los tweets de categorias.
+                var sd ='(' + ObtenerHijos("Categorias").replace(/\*/g,'or').slice(2) + ')';
+
+                $scope.currentCategory = "Categorias";
+
+                getLiveTweets(sd);
+
+
                 var data2= JSON.parse(funcollapse("Categorias"));
                 console.log(data2);
                 function Arbol(treeData) {
@@ -273,7 +248,7 @@ mainAppControllers.controller('vivoController',['$scope','$http',
 
                     // size of the diagram
                     var viewerWidth = $("#hierarchy2").width();
-                    var viewerHeight = 400;
+                    var viewerHeight = 500;
 
                     var tree = d3.layout.tree()
                         .size([viewerHeight, viewerWidth]);
@@ -373,9 +348,20 @@ mainAppControllers.controller('vivoController',['$scope','$http',
 
                             };
                             $scope.currentCategory = categoria;
+
+
+                            if(data3){
+                                var hijos= ObtenerHijos(categoria).replace(/\*/g,'or').slice(2);
+                                //bubble(seriesBubble(categoria,'nn'),"bubble2",diccionario_categoria[categoria]["hijos"]);
+                                var sd ='(' + hijos + ')';
+                                getLiveTweets(sd);
+
+                            };
                         };
 
-                        $('#radio-todos').prop("checked", true);
+
+
+                        //$('#radio-todos').prop("checked", true);
 
                     }
 
@@ -572,6 +558,8 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                     centerNode(root);
                 };
                 Arbol(data2);
+
+                document.getElementById("tweetsList1.5").style.height = $("#hierarchy").height()+ "px";
         }).error(function (data, status, headers, config) {
             console.log("data:" + data.message);
         });
