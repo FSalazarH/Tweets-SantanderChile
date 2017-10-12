@@ -894,7 +894,6 @@ mainAppControllers.controller('categoryControllers',['$scope','$rootScope','$htt
                     document.getElementById("tweetList1.5").style.height =  $("#chart2").height() - $("#tweetList2").height() + "px";
                     document.getElementById("tweetsList1").style.height = $("#chart2").height()+ "px";
 
-                    console.log(followersSentiment);
                     //Click por sentimiento:
                     document.getElementById('radio-todos').onclick = function(){
                         bubble(seriesBubble($scope.currentCategory,'nn'),"bubble2",diccionario_categoria[$scope.currentCategory]["hijos"]);

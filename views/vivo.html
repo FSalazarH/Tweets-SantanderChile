@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="col-md-6" id="tweetsList1">
-            <div  class="box box-primary"  id="tweetList1.5" style="position: relative; overflow: auto; width: auto;height: 500px;">
+            <div  class="box box-primary"  id="tweetList1.5" style="position: relative; overflow: auto; width: auto;height: 550px;">
                 <div class="box-header">
                     <i class="fa fa-twitter"></i>
                     <h3 class="box-title" style="display: inline-block;">Ultimos 10 tweets referentes a {{currentCategory}}</h3>
@@ -60,6 +60,8 @@
 
                                         <span class="label" style="background-color: rgba(63, 81, 181, 0.7);"> <i class="fa fa-users"> </i> {{x.followers_count}}                        </span>
                                         &nbsp;
+                                        <span class="label pull-right bg-green" > <i class="fa fa-clock-o"> </i> {{x.created_at}}                        </span>
+
                                     </p>
                                 </div>
                             </div>
@@ -67,39 +69,41 @@
                     </div>
 
             </div>
+        </div>
 
-            <div class="box-footer" id="tweetList2">
-                <br>   <br>
 
+        <div class="col-md-12">
+            <div class="box box-primary" id="tagbubble" >
+                <div class="box-header with-border">
+                    <i class="fa fa-circle" ></i>
+
+                    <h3 class="box-title">  Nivel de Exposición en Twitter sobre: {{currentCategory}}</h3>
+
+
+                </div>
+
+
+                <div class="box-body" id="bottonbubble">
+                    <center>
+                        <label class="radio-inline">
+                            <input  id="radio-todos2" type="radio" name="optradio" checked="checked" > Todos
+                        </label>
+                        <label class="radio-inline">
+                            <input id="radio-positivo2" type="radio" name="optradio"> Positivos
+                        </label>
+                        <label class="radio-inline">
+                            <input id="radio-negativo2" type="radio" name="optradio"> Negativos
+                        </label>
+                        <label class="radio-inline">
+                            <input  id="radio-neutral2" type="radio" name="optradio"> Neutrales
+                        </label>
+                    </center>
+                </div>
+
+                <div id ="bubble2"></div>
             </div>
         </div>
-    </div>
-    </div>
 
-    <div class="col-md-12">
-        <div class="box box-primary" id="tagbubble" >
-            <div class="box-header with-border">
-                <i class="fa fa-circle" ></i>
-                <h3 class="box-title">  Nivel de Exposición en Twitter sobre: {{currentCategory}}</h3>
-            </div>
-            <div class="box-body" id="bottonbubble">
-                <center>
-                    <label class="radio-inline">
-                        <input  id="radio-todos" type="radio" name="optradio" checked="checked" > Todos
-                    </label>
-                    <label class="radio-inline">
-                        <input id="radio-positivo" type="radio" name="optradio"> Positivos
-                    </label>
-                    <label class="radio-inline">
-                        <input id="radio-negativo" type="radio" name="optradio"> Negativos
-                    </label>
-                    <label class="radio-inline">
-                        <input  id="radio-neutral" type="radio" name="optradio"> Neutrales
-                    </label>
-                </center>
-            </div>
-            <div id ="bubble2"></div>
-        </div>
     </div>
 </section>
 
