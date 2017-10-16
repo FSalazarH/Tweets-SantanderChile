@@ -22,8 +22,6 @@ mainAppControllers.controller('vivoController',['$scope','$http',
                         var date1 = new Date(parseInt(data2[i]['created_at']));
                         data2[i]['created_at'] = date1.toString().split("GMT")[0];
                         new_data.push(data2[i]);
-
-
                     }
                 }
                 $scope.liveTweets = new_data;

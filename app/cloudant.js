@@ -200,7 +200,7 @@ exports.live_tweets = function(req, res){
     var request = require('request');
     var category = req.params.category;
     var url = credenciales+'/clasificados/_design/tweets_category/_search/tweets_category?q=';
-    var query = 'category:' + category + '&sort=["-created_at"]&limit=10'
+    var query = 'category:' + category + '&sort=["-created_at"]&limit=20'
     request(url + query, function(error, response, body){
         if(!error && response.statusCode == 200) {
             var jsonData = JSON.parse(body);
